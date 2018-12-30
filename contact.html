@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YACW - Contact</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+<header>
+    <picture>
+        <source srcset="img/small.png" media="(max-width: 768px)">
+        <source srcset="img/big.png" media="(max-width: 1280px)">
+        <img class="head-pic" src="img/verybig.png" alt="Some picture">
+    </picture>
+    <nav class="main-nav">
+        <ul>
+            <li class="nav-el"><a href="index.html">Home</a></li>
+            <li class="nav-el"><a href="about.html">About</a></li>
+            <li class="nav-el"><a href="news.html">News</a></li>
+            <li id="last-el" class="nav-el nav-active"><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1 class="text-center">Contact Us</h1>
+    <form  class="only-form text-center" onsubmit="onFormSubmit()" method="post">
+        <label>
+            First name: <br>
+            <input type="text" name="firstname" required>
+        </label><br>
+        <label>
+            Last name: <br>
+            <input type="text" name="lastname" required>
+        </label><br>
+
+        <label>
+            Gender: <br>
+            <input type="radio" name="gender" value="male" checked>
+        </label> Male<br>
+        <label>
+            <input type="radio" name="gender" value="female">
+        </label> Female<br>
+        <label>
+            <input type="radio" name="gender" value="other">
+            Other
+        </label> <br>
+
+        <input type="submit" value="Submit">
+    </form>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
