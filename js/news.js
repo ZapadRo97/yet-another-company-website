@@ -72,13 +72,6 @@ getJSON('news/news.json').then(function(news) {
             let deleteButt = document.createElement("button");
             let deleteText = document.createTextNode("Delete");
             deleteButt.appendChild(deleteText);
-            deleteButt.onclick = function deleteArticle() {
-                document.getElementById(neww.id).remove();
-                deleteButt.remove();
-                alert("deleted " + neww.id);
-            };
-            deleteButt.style["margin-right"] = "1em";
-            deleteButt.style['margin-bottom'] = "1em";
             let expiredButt = document.createElement("button");
             let expiredText = document.createTextNode("Expire");
             expiredButt.appendChild(expiredText);
@@ -87,6 +80,15 @@ getJSON('news/news.json').then(function(news) {
                 document.getElementById(neww.id).style["background-color"]="#F00";
                 expiredButt.remove();
             };
+            deleteButt.onclick = function deleteArticle() {
+                document.getElementById(neww.id).remove();
+                deleteButt.remove();
+                expiredButt.remove();
+                alert("deleted " + neww.id);
+            };
+            deleteButt.style["margin-right"] = "1em";
+            deleteButt.style['margin-bottom'] = "1em";
+
             main.appendChild(deleteButt);
             main.appendChild(expiredButt);
 
