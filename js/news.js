@@ -67,6 +67,13 @@ getJSON('news/news.json').then(function(news) {
             art.appendChild(para);
             art.id = neww.id;
             art.style['margin-bottom'] = "0.5em";
+
+            if(neww.expired){
+                art.style["background-color"]="#F00";
+            } else {
+                art.style["background-color"]=null;
+            }
+
             main.appendChild(art);
 
             let deleteButt = document.createElement("button");
@@ -76,15 +83,42 @@ getJSON('news/news.json').then(function(news) {
             let expiredText = document.createTextNode("Expire");
             expiredButt.appendChild(expiredText);
             expiredButt.onclick = function expireArticle() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        if(this.responseText === "EXPIRED") {
+                            document.getElementById(neww.id).style["background-color"]="#F00";
+                        }
 
-                document.getElementById(neww.id).style["background-color"]="#F00";
-                expiredButt.remove();
+                        if(this.responseText === "NOT_EXPIRED") {
+                            document.getElementById(neww.id).style["background-color"]=null;
+                        }
+
+                    }
+                };
+                xhttp.open("PUT", "requests.php", true);
+                xhttp.setRequestHeader("Content-type", "text/plain");
+                xhttp.send(neww.id);
+                //document.getElementById(neww.id).style["background-color"]="#F00";
+                //expiredButt.remove();
             };
             deleteButt.onclick = function deleteArticle() {
-                document.getElementById(neww.id).remove();
-                deleteButt.remove();
-                expiredButt.remove();
-                alert("deleted " + neww.id);
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        if(this.responseText === "DELETED") {
+                            document.getElementById(neww.id).remove();
+                            deleteButt.remove();
+                            expiredButt.remove();
+                            alert("deleted " + neww.id);
+                        }
+                    }
+                };
+                xhttp.open("DELETE", "requests.php", true);
+                xhttp.setRequestHeader("Content-type", "text/plain");
+                xhttp.send(neww.id);
+
             };
             deleteButt.style["margin-right"] = "1em";
             deleteButt.style['margin-bottom'] = "1em";
@@ -96,3 +130,34 @@ getJSON('news/news.json').then(function(news) {
     }
 });
 
+function showForm() {
+
+    let elementStyle = document.getElementById("new_form").style["display"];
+    if(elementStyle === "block" )
+        document.getElementById("new_form").style["display"] = "none";
+    else
+        document.getElementById("new_form").style["display"] = "block";
+}
+
+
+function onFormSubmit() {
+
+    let id = document.querySelector("input[name='id']").value;
+    let file = document.querySelector("input[name='file']").value;
+    let title = document.querySelector("input[name='title']").value;
+    //let text = document.querySelector("input[name='text']").value;
+    let text = document.getElementById("text_area").value;
+
+    let data = {"file": file + ".json",
+    "data":{"id": id, "title":title, "text": text, "expired":false}};
+
+
+    let req = new XMLHttpRequest();
+    req.open("POST", "add_news.php", true);
+    req.setRequestHeader("Content-type", "application/json");
+    req.send(JSON.stringify(data));
+
+    alert("News added");
+
+    return true;
+}

@@ -22,8 +22,29 @@
     </nav>
 </header>
 <main>
-    <h1 class="text-center">Our news</h1>
+    <h1 class="text-center">Our news  <span><button onclick="showForm()">Add</button></span></h1>
+    <form class="add-news" id="new_form" onsubmit="onFormSubmit()" method="post">
+        <label>
+            Id:
+            <input class="full-width" type="text" name="id" required>
+        </label><br>
+        <label>
+            File:
+            <input class="full-width" type="text" name="file" required>
+        </label><br>
+        <label>
+            Title:
+            <input class="full-width" type="text" name="title" required>
+        </label><br>
+        <label>
+            Text:
+            <textarea class="full-width" id="text_area" name="text" rows="10"></textarea>
+        </label><br>
+
+        <input type="submit" value="Create">
+    </form>
 </main>
+
 <script src="js/news.js"></script>
 </body>
 </html>
